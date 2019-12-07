@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public void onClick(View v) {
-        // TODO Auto-generated method stub
         start(v);
       }
     });
@@ -58,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public void onClick(View v) {
-        // TODO Auto-generated method stub
         stop(v);
       }
     });
@@ -68,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public void onClick(View v) {
-        // TODO Auto-generated method stub
         play(v);
       }
     });
@@ -78,7 +75,6 @@ public class MainActivity extends AppCompatActivity {
 
       @Override
       public void onClick(View v) {
-        // TODO Auto-generated method stub
         stopPlay(v);
       }
     });
@@ -140,7 +136,6 @@ public class MainActivity extends AppCompatActivity {
       Toast.makeText(getApplicationContext(), "Start play the recording...",
         Toast.LENGTH_SHORT).show();
     } catch (Exception e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
@@ -159,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
           Toast.LENGTH_SHORT).show();
       }
     } catch (Exception e) {
-      // TODO Auto-generated catch block
       e.printStackTrace();
     }
   }
