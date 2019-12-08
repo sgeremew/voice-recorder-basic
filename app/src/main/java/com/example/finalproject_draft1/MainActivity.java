@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     text = (TextView) findViewById(R.id.text1);
     // store it to sd card
     outputFile = Environment.getExternalStorageDirectory().
-      getAbsolutePath() + "/javacodegeeksRecording.3gpp";
+      getAbsolutePath() + "/myRecording.3gpp";
 
     // if these permissions are not enabled this activity is essentially unusable
     if (isPermissionsEnabled()) {

@@ -35,7 +35,7 @@
     android:layout_width="150dp"
     android:layout_height="wrap_content"
     android:layout_marginTop="100dp"
-    android:text="start"
+    android:text="record"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toBottomOf="@+id/text1" />
 
