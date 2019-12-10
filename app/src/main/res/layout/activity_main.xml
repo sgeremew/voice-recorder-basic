@@ -1,73 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:app="http://schemas.android.com/apk/res-auto"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
   tools:context=".MainActivity">
-
-
-  <TextView
-    android:id="@+id/text1"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Recording Point: "
-    android:textAppearance="?android:attr/textAppearanceMedium"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-  <ImageView
-    android:id="@+id/micImage"
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_below="@+id/text1"
-    android:layout_centerHorizontal="true"
-    android:layout_marginTop="32dp"
-    android:contentDescription="Microphone"
-    android:src="@android:drawable/presence_audio_online"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintHorizontal_bias="0.498"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-  <Button
-    android:id="@+id/start"
-    android:layout_width="150dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="120dp"
-    android:text="record"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-  <Button
-    android:id="@+id/stop"
-    android:layout_width="150dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="120dp"
-    android:enabled="false"
-    android:text="stop"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/appBarLayout" />
-
-  <Button
-    android:id="@+id/play"
-    android:layout_width="150dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="24dp"
-    android:enabled="false"
-    android:text="play"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/start" />
-
-  <Button
-    android:id="@+id/stopPlay"
-    android:layout_width="150dp"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="24dp"
-    android:enabled="false"
-    android:text="stop playing"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toBottomOf="@+id/stop" />
 
   <com.google.android.material.appbar.AppBarLayout
     android:id="@+id/appBarLayout"
@@ -104,14 +41,4 @@
     app:layout_constraintTop_toTopOf="@+id/appBarLayout"
     tools:layout_editor_absoluteX="0dp" />
 
-  <com.google.android.material.floatingactionbutton.FloatingActionButton
-    android:id="@+id/fab"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="bottom|end"
-    android:layout_margin="@dimen/fab_margin"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:srcCompat="@android:drawable/ic_dialog_email" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

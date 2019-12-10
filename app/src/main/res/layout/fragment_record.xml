@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:app="http://schemas.android.com/apk/res-auto"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:id="@+id/constraintLayout"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  tools:context=".RecordFragment">
+
+  <TextView
+    android:id="@+id/recordingStatusText"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="Recording"
+    android:textAppearance="?android:attr/textAppearanceMedium"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:textStyle="bold"
+    android:fontFamily="sans-serif-condensed"
+    android:textColor="#000000"
+    android:textSize="18sp"/>
+
+  <ImageView
+    android:id="@+id/micImage"
+    android:layout_width="60dp"
+    android:layout_height="60dp"
+    android:layout_below="@+id/recordingStatusText"
+    android:layout_centerHorizontal="true"
+    android:layout_marginTop="32dp"
+    android:contentDescription="Microphone"
+    android:src="@android:drawable/presence_audio_online"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintHorizontal_bias="0.498"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <Button
+    android:id="@+id/start"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="32dp"
+    android:text="record"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+  <Button
+    android:id="@+id/pause"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="10dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginTop="32dp"
+    android:layout_marginBottom="10dp"
+    android:enabled="false"
+    android:fontFamily="sans-serif-condensed"
+    android:text="pause"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent" />
+
+  <Button
+    android:id="@+id/play"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:enabled="false"
+    android:text="play"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/start" />
+
+  <Button
+    android:id="@+id/stopPlay"
+    android:layout_width="150dp"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="24dp"
+    android:enabled="false"
+    android:text="stop playing"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintTop_toBottomOf="@+id/pause" />
+
+  <com.google.android.material.floatingactionbutton.FloatingActionButton
+    android:id="@+id/fab"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom|end"
+    android:layout_margin="@dimen/fab_margin"
+    android:src="@drawable/ic_mic_white"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent" />
+
+  <Chronometer
+    android:id="@+id/chronometer"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:fontFamily="sans-serif-light"
+    android:textSize="60sp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent" />
+
+
+  <ProgressBar
+    android:id="@+id/progressBar"
+    style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:indeterminate="false"
+    android:max="100"
+    android:progress="0"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="@+id/chronometer" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

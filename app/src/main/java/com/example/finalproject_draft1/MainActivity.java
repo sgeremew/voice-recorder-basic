@@ -3,6 +3,7 @@ package com.example.finalproject_draft1;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.viewpager.widget.ViewPager;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
@@ -13,14 +14,24 @@ import java.io.IOException;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 
-import android.os.Environment;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.finalproject_draft1.ui.main.MyTabPagerAdapter;
+import com.google.android.material.appbar.AppBarLayout;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.android.material.tabs.TabLayout;
+
 public class MainActivity extends AppCompatActivity {
+
+  AppBarLayout appBarLayout;
+  ViewPager viewPager;
+  TabLayout tabs;
+  FloatingActionButton fab;
+
 
   private MediaRecorder myRecorder;
   private MediaPlayer myPlayer;
@@ -36,51 +47,70 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
 
-    text = (TextView) findViewById(R.id.text1);
-    // store it to sd card
-    outputFile = Environment.getExternalStorageDirectory().
-      getAbsolutePath() + "/myRecording.3gpp";
+    appBarLayout = findViewById(R.id.appBarLayout);
 
-    // if these permissions are not enabled this activity is essentially unusable
-    if (isPermissionsEnabled()) {
-      setupAudio();
-    }
+    MyTabPagerAdapter myTabPagerAdapter = new MyTabPagerAdapter(this, getSupportFragmentManager());
 
-    startBtn = (Button) findViewById(R.id.start);
-    startBtn.setOnClickListener(new OnClickListener() {
+    viewPager = findViewById(R.id.view_pager);
+    viewPager.setAdapter(myTabPagerAdapter);
 
+    tabs = findViewById(R.id.tabs);
+    tabs.setupWithViewPager(viewPager);
+
+    fab = findViewById(R.id.fab);
+    fab.setOnClickListener(new View.OnClickListener() {
       @Override
-      public void onClick(View v) {
-        start(v);
+      public void onClick(View view) {
+        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+          .setAction("Action", null).show();
       }
     });
 
-    stopBtn = (Button) findViewById(R.id.stop);
-    stopBtn.setOnClickListener(new OnClickListener() {
-
-      @Override
-      public void onClick(View v) {
-        stop(v);
-      }
-    });
-
-    playBtn = (Button) findViewById(R.id.play);
-    playBtn.setOnClickListener(new OnClickListener() {
-
-      @Override
-      public void onClick(View v) {
-        play(v);
-      }
-    });
-
-    stopPlayBtn = (Button) findViewById(R.id.stopPlay);
-    stopPlayBtn.setOnClickListener(new OnClickListener() {
-
-      @Override
-      public void onClick(View v) {
-        stopPlay(v);
-      }
-    });
+//    text = (TextView) findViewById(R.id.text1);
+//    // store it to sd card
+//    outputFile = Environment.getExternalStorageDirectory().
+//      getAbsolutePath() + "/myRecording.3gpp";
+//
+//    // if these permissions are not enabled this activity is essentially unusable
+//    if (isPermissionsEnabled()) {
+//      setupAudio();
+//    }
+//
+//    startBtn = (Button) findViewById(R.id.start);
+//    startBtn.setOnClickListener(new OnClickListener() {
+//
+//      @Override
+//      public void onClick(View v) {
+//        start(v);
+//      }
+//    });
+//
+//    stopBtn = (Button) findViewById(R.id.stop);
+//    stopBtn.setOnClickListener(new OnClickListener() {
+//
+//      @Override
+//      public void onClick(View v) {
+//        stop(v);
+//      }
+//    });
+//
+//    playBtn = (Button) findViewById(R.id.play);
+//    playBtn.setOnClickListener(new OnClickListener() {
+//
+//      @Override
+//      public void onClick(View v) {
+//        play(v);
+//      }
+//    });
+//
+//    stopPlayBtn = (Button) findViewById(R.id.stopPlay);
+//    stopPlayBtn.setOnClickListener(new OnClickListener() {
+//
+//      @Override
+//      public void onClick(View v) {
+//        stopPlay(v);
+//      }
+//    });
   }
 
   // sets up the audio source and output
