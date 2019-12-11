@@ -35,10 +35,10 @@ public class MyTabPagerAdapter extends FragmentPagerAdapter {
 
     switch (position){
       case 0:
-        fragment = RecordFragment.newInstance("arg1", "arg2");
+        fragment = RecordFragment.newInstance();
         break;
       case 1:
-        fragment = SavedFragment.newInstance("arg1", "arg2");
+        fragment = SavedFragment.newInstance();
         break;
     }
 

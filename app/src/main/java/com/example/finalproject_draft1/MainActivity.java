@@ -57,14 +57,14 @@ public class MainActivity extends AppCompatActivity {
     tabs = findViewById(R.id.tabs);
     tabs.setupWithViewPager(viewPager);
 
-    fab = findViewById(R.id.fab);
-    fab.setOnClickListener(new View.OnClickListener() {
-      @Override
-      public void onClick(View view) {
-        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-          .setAction("Action", null).show();
-      }
-    });
+//    fab = findViewById(R.id.fab);
+//    fab.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View view) {
+//        Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+//          .setAction("Action", null).show();
+//      }
+//    });
 
 //    text = (TextView) findViewById(R.id.text1);
 //    // store it to sd card
@@ -113,92 +113,92 @@ public class MainActivity extends AppCompatActivity {
 //    });
   }
 
-  // sets up the audio source and output
-  public void setupAudio() {
-    myRecorder = new MediaRecorder();
-    myRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-    myRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-    myRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
-    myRecorder.setOutputFile(outputFile);
-  }
-
-  public void start(View view) {
-    try {
-      myRecorder.prepare();
-      myRecorder.start();
-    } catch (IllegalStateException e) {
-      // start:it is called before prepare()
-      // prepare: it is called after start() or before setOutputFormat()
-      e.printStackTrace();
-    } catch (IOException e) {
-      // prepare() fails
-      e.printStackTrace();
-    }
-
-    text.setText("Recording Point: Recording");
-    startBtn.setEnabled(false);
-    stopBtn.setEnabled(true);
-
-    Toast.makeText(getApplicationContext(), "Start recording...",
-      Toast.LENGTH_SHORT).show();
-  }
-
-  public void stop(View view) {
-    try {
-      myRecorder.stop();
-      myRecorder.release();
-      myRecorder = null;
-
-      stopBtn.setEnabled(false);
-      playBtn.setEnabled(true);
-      text.setText("Recording Point: Stop recording");
-
-      Toast.makeText(getApplicationContext(), "Stop recording...",
-        Toast.LENGTH_SHORT).show();
-    } catch (IllegalStateException e) {
-      //  it is called before start()
-      e.printStackTrace();
-    } catch (RuntimeException e) {
-      // no valid audio/video data has been received
-      e.printStackTrace();
-    }
-  }
-
-  public void play(View view) {
-    try {
-      myPlayer = new MediaPlayer();
-      myPlayer.setDataSource(outputFile);
-      myPlayer.prepare();
-      myPlayer.start();
-
-      playBtn.setEnabled(false);
-      stopPlayBtn.setEnabled(true);
-      text.setText("Recording Point: Playing");
-
-      Toast.makeText(getApplicationContext(), "Start play the recording...",
-        Toast.LENGTH_SHORT).show();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
-
-  public void stopPlay(View view) {
-    try {
-      if (myPlayer != null) {
-        myPlayer.stop();
-        myPlayer.release();
-        myPlayer = null;
-        playBtn.setEnabled(true);
-        stopPlayBtn.setEnabled(false);
-        text.setText("Recording Point: Stop playing");
-
-        Toast.makeText(getApplicationContext(), "Stop playing the recording...",
-          Toast.LENGTH_SHORT).show();
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-  }
+//  // sets up the audio source and output
+//  public void setupAudio() {
+//    myRecorder = new MediaRecorder();
+//    myRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
+//    myRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+//    myRecorder.setAudioEncoder(MediaRecorder.OutputFormat.AMR_NB);
+//    myRecorder.setOutputFile(outputFile);
+//  }
+//
+//  public void start(View view) {
+//    try {
+//      myRecorder.prepare();
+//      myRecorder.start();
+//    } catch (IllegalStateException e) {
+//      // start:it is called before prepare()
+//      // prepare: it is called after start() or before setOutputFormat()
+//      e.printStackTrace();
+//    } catch (IOException e) {
+//      // prepare() fails
+//      e.printStackTrace();
+//    }
+//
+//    text.setText("Recording Point: Recording");
+//    startBtn.setEnabled(false);
+//    stopBtn.setEnabled(true);
+//
+//    Toast.makeText(getApplicationContext(), "Start recording...",
+//      Toast.LENGTH_SHORT).show();
+//  }
+//
+//  public void stop(View view) {
+//    try {
+//      myRecorder.stop();
+//      myRecorder.release();
+//      myRecorder = null;
+//
+//      stopBtn.setEnabled(false);
+//      playBtn.setEnabled(true);
+//      text.setText("Recording Point: Stop recording");
+//
+//      Toast.makeText(getApplicationContext(), "Stop recording...",
+//        Toast.LENGTH_SHORT).show();
+//    } catch (IllegalStateException e) {
+//      //  it is called before start()
+//      e.printStackTrace();
+//    } catch (RuntimeException e) {
+//      // no valid audio/video data has been received
+//      e.printStackTrace();
+//    }
+//  }
+//
+//  public void play(View view) {
+//    try {
+//      myPlayer = new MediaPlayer();
+//      myPlayer.setDataSource(outputFile);
+//      myPlayer.prepare();
+//      myPlayer.start();
+//
+//      playBtn.setEnabled(false);
+//      stopPlayBtn.setEnabled(true);
+//      text.setText("Recording Point: Playing");
+//
+//      Toast.makeText(getApplicationContext(), "Start play the recording...",
+//        Toast.LENGTH_SHORT).show();
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//    }
+//  }
+//
+//  public void stopPlay(View view) {
+//    try {
+//      if (myPlayer != null) {
+//        myPlayer.stop();
+//        myPlayer.release();
+//        myPlayer = null;
+//        playBtn.setEnabled(true);
+//        stopPlayBtn.setEnabled(false);
+//        text.setText("Recording Point: Stop playing");
+//
+//        Toast.makeText(getApplicationContext(), "Stop playing the recording...",
+//          Toast.LENGTH_SHORT).show();
+//      }
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//    }
+//  }
 
 
   private final int MY_PERMISSIONS = 1; // constant used as request code in callback
@@ -253,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
           // permission denied
           // Disable the recording functionality that depends on this permission.
-          startBtn.setEnabled(false);
+//          startBtn.setEnabled(false);
         }
         return;
       }

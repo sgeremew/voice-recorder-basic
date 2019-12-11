@@ -1,10 +1,13 @@
 package com.example.finalproject_draft1.Database;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.example.finalproject_draft1.RecordingItem;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -51,5 +54,30 @@ public class DBHelper extends SQLiteOpenHelper {
     sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
   }
 
+
+
+
+  public boolean addRecording(RecordingItem recordingItem){
+
+
+    try {
+      SQLiteDatabase db = getWritableDatabase();
+      ContentValues contentValues = new ContentValues();
+      contentValues.put(COLUMN_NAME, recordingItem.getName());
+      contentValues.put(COLUMN_PATH, recordingItem.getPath());
+      contentValues.put(COLUMN_LENGTH, recordingItem.getLength());
+      contentValues.put(COLUMN_TIME_ADDED, recordingItem.getTime_added());
+
+      db.insert(TABLE_NAME, null, contentValues);
+
+      return true;
+    } catch (Exception e){
+
+      e.printStackTrace();
+      return false;
+    }
+
+
+  }
 
 }

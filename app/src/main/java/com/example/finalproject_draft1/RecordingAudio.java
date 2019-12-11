@@ -7,6 +7,8 @@ import android.os.Environment;
 import android.os.IBinder;
 import android.widget.Toast;
 
+import com.example.finalproject_draft1.Database.DBHelper;
+
 import java.io.File;
 import java.io.IOException;
 
@@ -21,9 +23,14 @@ public class RecordingAudio extends Service {
 
   String fileName;
 
+  DBHelper dbHelper;
+
   @Override
   public void onCreate() {
     super.onCreate();
+
+    dbHelper = new DBHelper(getApplicationContext());
+
   }
 
 
@@ -85,6 +92,10 @@ public class RecordingAudio extends Service {
 
 
     // TODO: ADD TO DATABASE
+
+    RecordingItem recordingItem = new RecordingItem(fileName, file.getAbsolutePath(), elapsedMillis, System.currentTimeMillis());
+
+    dbHelper.addRecording(recordingItem);
 
 
   }
