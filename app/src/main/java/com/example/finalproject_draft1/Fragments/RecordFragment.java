@@ -1,14 +1,11 @@
-package com.example.finalproject_draft1;
+package com.example.finalproject_draft1.Fragments;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
+
 import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 
 import android.os.Environment;
 import android.os.SystemClock;
@@ -21,6 +18,8 @@ import android.widget.Chronometer;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.finalproject_draft1.R;
+import com.example.finalproject_draft1.RecordingAudio;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.File;

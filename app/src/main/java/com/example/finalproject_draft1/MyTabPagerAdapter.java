@@ -1,4 +1,4 @@
-package com.example.finalproject_draft1.ui.main;
+package com.example.finalproject_draft1;
 
 import android.content.Context;
 
@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.finalproject_draft1.R;
-import com.example.finalproject_draft1.RecordFragment;
-import com.example.finalproject_draft1.SavedFragment;
+import com.example.finalproject_draft1.Fragments.RecordFragment;
+import com.example.finalproject_draft1.Fragments.SavedFragment;
+
 
 /**
  * A [FragmentPagerAdapter] that returns a fragment corresponding to

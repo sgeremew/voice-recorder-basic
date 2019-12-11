@@ -5,7 +5,7 @@
   android:id="@+id/constraintLayout"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
-  tools:context=".RecordFragment">
+  tools:context=".Fragments.RecordFragment">
 
   <TextView
     android:id="@+id/recordingStatusText"
@@ -22,29 +22,6 @@
     app:layout_constraintEnd_toEndOf="parent"
     app:layout_constraintStart_toStartOf="parent" />
 
-  <!--  <ImageView-->
-  <!--    android:id="@+id/micImage"-->
-  <!--    android:layout_width="60dp"-->
-  <!--    android:layout_height="60dp"-->
-  <!--    android:layout_below="@+id/recordingStatusText"-->
-  <!--    android:layout_centerHorizontal="true"-->
-  <!--    android:layout_marginTop="32dp"-->
-  <!--    android:contentDescription="Microphone"-->
-  <!--    android:src="@android:drawable/presence_audio_online"-->
-  <!--    app:layout_constraintEnd_toEndOf="parent"-->
-  <!--    app:layout_constraintHorizontal_bias="0.498"-->
-  <!--    app:layout_constraintStart_toStartOf="parent"-->
-  <!--    app:layout_constraintTop_toTopOf="parent" />-->
-
-  <!--  <Button-->
-  <!--    android:id="@+id/start"-->
-  <!--    android:layout_width="150dp"-->
-  <!--    android:layout_height="wrap_content"-->
-  <!--    android:layout_marginTop="32dp"-->
-  <!--    android:text="record"-->
-  <!--    app:layout_constraintStart_toStartOf="parent"-->
-  <!--    app:layout_constraintTop_toTopOf="parent" />-->
-
   <Button
     android:id="@+id/pause"
     android:layout_width="150dp"
@@ -58,26 +35,6 @@
     android:text="pause"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintEnd_toEndOf="parent" />
-
-  <!--  <Button-->
-  <!--    android:id="@+id/play"-->
-  <!--    android:layout_width="150dp"-->
-  <!--    android:layout_height="wrap_content"-->
-  <!--    android:layout_marginTop="24dp"-->
-  <!--    android:enabled="false"-->
-  <!--    android:text="play"-->
-  <!--    app:layout_constraintStart_toStartOf="parent"-->
-  <!--    app:layout_constraintTop_toBottomOf="@+id/start" />-->
-
-  <!--  <Button-->
-  <!--    android:id="@+id/stopPlay"-->
-  <!--    android:layout_width="150dp"-->
-  <!--    android:layout_height="wrap_content"-->
-  <!--    android:layout_marginTop="24dp"-->
-  <!--    android:enabled="false"-->
-  <!--    android:text="stop playing"-->
-  <!--    app:layout_constraintEnd_toEndOf="parent"-->
-  <!--    app:layout_constraintTop_toBottomOf="@+id/pause" />-->
 
   <com.google.android.material.floatingactionbutton.FloatingActionButton
     android:id="@+id/fab"

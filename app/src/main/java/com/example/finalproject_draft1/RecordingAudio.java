@@ -15,15 +15,15 @@ import java.io.IOException;
 public class RecordingAudio extends Service {
 
 
-  MediaRecorder mediaRecorder;
-  long startingTimeMillis = 0;
-  long elapsedMillis = 0;
+  private MediaRecorder mediaRecorder;
+  private long startingTimeMillis = 0;
+  private long elapsedMillis = 0;
 
-  File file;
+  private File file;
 
-  String fileName;
+  private String fileName;
 
-  DBHelper dbHelper;
+  private DBHelper dbHelper;
 
   @Override
   public void onCreate() {
