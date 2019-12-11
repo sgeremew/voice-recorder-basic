@@ -40,7 +40,6 @@ public class FileViewerFragment extends Fragment {
    *
    * @return A new instance of fragment FileViewerFragment.
    */
-  // TODO: Rename and change types and number of parameters
   public static FileViewerFragment newInstance() {
     FileViewerFragment fragment = new FileViewerFragment();
 
