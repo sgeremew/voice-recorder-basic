@@ -12,27 +12,31 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.finalproject_draft1.Database.DBHelper;
+import com.example.finalproject_draft1.Interfaces.OnDBChangeListener;
 import com.example.finalproject_draft1.R;
 import com.example.finalproject_draft1.RecordingItem;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.FileViewerHolder> {
+public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.FileViewerHolder> implements OnDBChangeListener {
 
   Context context;
   List<RecordingItem> recordingItems;
   LinearLayoutManager layoutManager;
+
+  DBHelper dbHelper;
 
 
   public FileViewerAdapter(Context context, ArrayList<RecordingItem> recordingItems, LinearLayoutManager layoutManager) {
     this.context = context;
     this.recordingItems = recordingItems;
     this.layoutManager = layoutManager;
+    dbHelper = new DBHelper(context);
+
+    dbHelper.setOnDBChangeListener(this);
   }
 
 
@@ -42,7 +46,6 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Fi
 
 
     View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recording_item_card_view, viewGroup, false);
-
 
     return new FileViewerHolder(itemView);
 
@@ -73,6 +76,14 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Fi
     return recordingItems.size();
   }
 
+  @Override
+  public void onNewDBEntryAdded(RecordingItem recordingItem) {
+
+    recordingItems.add(recordingItem);
+    notifyItemInserted(recordingItems.size() - 1);
+
+  }
+
 
   public class FileViewerHolder extends RecyclerView.ViewHolder {
 
@@ -90,10 +101,6 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Fi
       tvLength = itemView.findViewById(R.id.file_length);
       tvDateTimeAdded = itemView.findViewById(R.id.file_datetime_recorded);
       cardView = itemView.findViewById(R.id.cardView);
-
-
-
-
 
 
     }

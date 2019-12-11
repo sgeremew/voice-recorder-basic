@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import com.example.finalproject_draft1.Interfaces.OnDBChangeListener;
 import com.example.finalproject_draft1.RecordingItem;
 
 import java.util.ArrayList;
@@ -28,6 +29,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
   private static final String COMMA_SEP = ",";
+
+
+  private static OnDBChangeListener onDBChangeListener;
 
 
   private static final String SQLITE_CREATE_TABLE =
@@ -71,6 +75,12 @@ public class DBHelper extends SQLiteOpenHelper {
 
       db.insert(TABLE_NAME, null, contentValues);
 
+
+      if (onDBChangeListener != null) {
+        onDBChangeListener.onNewDBEntryAdded(recordingItem);
+      }
+
+
       return true;
     } catch (Exception e) {
 
@@ -110,6 +120,14 @@ public class DBHelper extends SQLiteOpenHelper {
       return null;
 
     }
+
+  }
+
+
+  public static void setOnDBChangeListener(OnDBChangeListener listener) {
+
+
+    onDBChangeListener = listener;
 
   }
 
