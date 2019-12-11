@@ -22,6 +22,7 @@ import com.example.finalproject_draft1.R;
 import com.example.finalproject_draft1.RecordingItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class PlaybackFragment extends DialogFragment {
@@ -111,7 +112,11 @@ public class PlaybackFragment extends DialogFragment {
 
         } else if (mediaPlayer == null && fromUser) {
 
-          prepareMediaPlayerFromPoint(progress);
+          try {
+            prepareMediaPlayerFromPoint(progress);
+          } catch (IOException e){
+            e.printStackTrace();
+          }
           updateSeekbar();
 
         }
@@ -132,11 +137,44 @@ public class PlaybackFragment extends DialogFragment {
 
   }
 
-  private void prepareMediaPlayerFromPoint(int progress) {
+  private void prepareMediaPlayerFromPoint(int progress) throws IOException {
 
 
     mediaPlayer = new MediaPlayer();
+    mediaPlayer.setDataSource(recordingItem.getPath());
+    mediaPlayer.prepare();
 
+    seekBar.setMax(mediaPlayer.getDuration());
+
+    mediaPlayer.seekTo(progress);
+    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+      @Override
+      public void onCompletion(MediaPlayer mediaPlayer) {
+
+        stopPlaying();
+
+      }
+    });
+
+  }
+
+  private void stopPlaying() {
+
+    floatingActionButton.setImageResource(R.drawable.ic_media_play);
+
+    handler.removeCallbacks(runnable);
+
+    mediaPlayer.stop();
+    mediaPlayer.reset();
+    mediaPlayer.release();
+    mediaPlayer = null;
+
+
+    seekBar.setProgress(seekBar.getMax());
+    isPlaying = !isPlaying;
+
+    tvFileCurrentProgress.setText(tvFileLength.getText());
+    seekBar.setProgress(seekBar.getMax());
 
   }
 
