@@ -58,9 +58,7 @@ public class DBHelper extends SQLiteOpenHelper {
   }
 
 
-
-
-  public boolean addRecording(RecordingItem recordingItem){
+  public boolean addRecording(RecordingItem recordingItem) {
 
 
     try {
@@ -74,7 +72,7 @@ public class DBHelper extends SQLiteOpenHelper {
       db.insert(TABLE_NAME, null, contentValues);
 
       return true;
-    } catch (Exception e){
+    } catch (Exception e) {
 
       e.printStackTrace();
       return false;
@@ -84,7 +82,7 @@ public class DBHelper extends SQLiteOpenHelper {
   }
 
 
-  public ArrayList<RecordingItem> getAllRecordings(){
+  public ArrayList<RecordingItem> getAllRecordings() {
 
     ArrayList<RecordingItem> arrayList = new ArrayList<>();
 
@@ -92,9 +90,9 @@ public class DBHelper extends SQLiteOpenHelper {
 
     Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
 
-    if(cursor != null){
+    if (cursor != null) {
 
-      while(cursor.moveToNext()){
+      while (cursor.moveToNext()) {
         String name = cursor.getString(1);
         String path = cursor.getString(2);
         int length = (int) cursor.getLong(3);
@@ -105,9 +103,14 @@ public class DBHelper extends SQLiteOpenHelper {
         arrayList.add(recordingItem);
       }
 
+      cursor.close();
+      return arrayList;
+    } else {
+
+      return null;
+
     }
 
-    return null;
   }
 
 

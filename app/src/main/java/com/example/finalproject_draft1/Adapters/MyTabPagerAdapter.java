@@ -1,4 +1,4 @@
-package com.example.finalproject_draft1;
+package com.example.finalproject_draft1.Adapters;
 
 import android.content.Context;
 
@@ -9,7 +9,8 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
 import com.example.finalproject_draft1.Fragments.RecordFragment;
-import com.example.finalproject_draft1.Fragments.SavedFragment;
+import com.example.finalproject_draft1.Fragments.FileViewerFragment;
+import com.example.finalproject_draft1.R;
 
 
 /**
@@ -33,12 +34,12 @@ public class MyTabPagerAdapter extends FragmentPagerAdapter {
     // Return a PlaceholderFragment (defined as a static inner class below).
     Fragment fragment = null;
 
-    switch (position){
+    switch (position) {
       case 0:
         fragment = RecordFragment.newInstance();
         break;
       case 1:
-        fragment = SavedFragment.newInstance();
+        fragment = FileViewerFragment.newInstance();
         break;
     }
 
