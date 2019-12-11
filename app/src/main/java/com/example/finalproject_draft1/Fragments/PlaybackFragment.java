@@ -1,7 +1,10 @@
 package com.example.finalproject_draft1.Fragments;
 
+import android.annotation.TargetApi;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,6 +21,8 @@ import androidx.fragment.app.DialogFragment;
 import com.example.finalproject_draft1.R;
 import com.example.finalproject_draft1.RecordingItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.util.concurrent.TimeUnit;
 
 public class PlaybackFragment extends DialogFragment {
 
@@ -43,10 +48,10 @@ public class PlaybackFragment extends DialogFragment {
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
+    recordingItem = (RecordingItem) getArguments().getSerializable("item");
 
-
-
-
+    minutes = TimeUnit.MILLISECONDS.toMinutes(recordingItem.getLength());
+    seconds = TimeUnit.MILLISECONDS.toSeconds(recordingItem.getLength()) - TimeUnit.MINUTES.toSeconds(minutes);
 
   }
 
@@ -64,6 +69,9 @@ public class PlaybackFragment extends DialogFragment {
     seekBar = view.findViewById(R.id.seekbar);
     floatingActionButton = view.findViewById(R.id.fab_play);
 
+    setSeekbarValues();
+
+
     builder.setView(view);
 
     dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
@@ -71,6 +79,96 @@ public class PlaybackFragment extends DialogFragment {
 
   }
 
+  @TargetApi(16)
+  private void setSeekbarValues() {
+
+
+    ColorFilter colorFilter = new LightingColorFilter(getResources().getColor(R.color.colorPrimary),
+      getResources().getColor(R.color.colorPrimary));
+
+
+    seekBar.getProgressDrawable().setColorFilter(colorFilter);
+    // TODO this only works in Api >=16
+    seekBar.getThumb().setColorFilter(colorFilter);
+
+
+    seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+      @Override
+      public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+        if (mediaPlayer != null && fromUser) {
+
+          mediaPlayer.seekTo(progress);
+          handler.removeCallbacks(runnable);
+
+          long minutes = TimeUnit.MILLISECONDS.toMinutes(mediaPlayer.getCurrentPosition());
+          long seconds = TimeUnit.MILLISECONDS.toSeconds(mediaPlayer.getCurrentPosition()) - TimeUnit.MINUTES.toSeconds(minutes);
+
+
+          tvFileCurrentProgress.setText(String.format("%02d:%02d", minutes, seconds));
+
+          updateSeekbar();
+
+        } else if (mediaPlayer == null && fromUser) {
+
+          prepareMediaPlayerFromPoint(progress);
+          updateSeekbar();
+
+        }
+
+      }
+
+      @Override
+      public void onStartTrackingTouch(SeekBar seekBar) {
+
+      }
+
+      @Override
+      public void onStopTrackingTouch(SeekBar seekBar) {
+
+      }
+    });
+
+
+  }
+
+  private void prepareMediaPlayerFromPoint(int progress) {
+
+
+    mediaPlayer = new MediaPlayer();
+
+
+  }
+
+
+  private Runnable runnable = new Runnable() {
+
+
+    @Override
+    public void run() {
+
+      if (mediaPlayer != null) {
+
+        int currentPosition = mediaPlayer.getCurrentPosition();
+        seekBar.setProgress(currentPosition);
+
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(currentPosition);
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(currentPosition) - TimeUnit.MINUTES.toSeconds(minutes);
+
+        tvFileCurrentProgress.setText(String.format("%02d:%02d", minutes, seconds));
+        updateSeekbar();
+
+      }
+
+    }
+  };
+
+  private void updateSeekbar() {
+
+
+    handler.postDelayed(runnable, 1000);
+
+  }
 
 
 }
