@@ -1,23 +1,58 @@
 package com.example.finalproject_draft1;
 
+import android.animation.AnimatorInflater;
+import android.animation.StateListAnimator;
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.content.res.ColorStateList;
+import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.Outline;
+import android.graphics.drawable.Drawable;
+import android.graphics.drawable.LayerDrawable;
+import android.graphics.drawable.RippleDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.StateListDrawable;
+import android.graphics.drawable.shapes.OvalShape;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.ColorRes;
+import androidx.annotation.DimenRes;
+import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Environment;
+import android.os.SystemClock;
+import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewOutlineProvider;
+import android.view.ViewPropertyAnimator;
+import android.view.ViewTreeObserver;
+import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.Interpolator;
+import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.finalproject_draft1.ui.main.PageViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.File;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 
 /**
@@ -74,7 +109,7 @@ public class RecordFragment extends Fragment {
 
   Chronometer chronometer;
   TextView tvRecordingStatus;
-  Button btnFloatingAction;
+  FloatingActionButton btnFloatingAction;
   Button btnPause;
 
   private boolean startRecording = true;
@@ -127,6 +162,55 @@ public class RecordFragment extends Fragment {
     if (mListener != null) {
       mListener.onFragmentInteraction(uri);
     }
+  }
+
+
+  // TODO: Needs to happen on a click!
+  public void recordAudio(){
+
+    onRecord(startRecording);
+    startRecording = !startRecording;
+
+  }
+
+  private void onRecord(boolean start){
+
+    Intent intent = new Intent(getActivity(), RecordingAudio.class);
+
+    if(start){
+
+      btnFloatingAction.setImageResource(R.drawable.ic_media_stop);
+      Toast.makeText(getContext(), "Recording started", Toast.LENGTH_LONG).show();
+
+      File folder = new File(Environment.getExternalStorageDirectory() + "/MySoundRecording");
+
+      if(!folder.exists()){
+        folder.mkdir();
+      }
+
+
+      chronometer.setBase((SystemClock.elapsedRealtime()));
+      chronometer.start();
+
+
+      getActivity().startService(intent);
+      getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+
+      tvRecordingStatus.setText("Recording...");
+    }
+
+    else{
+      btnFloatingAction.setImageResource(R.drawable.ic_mic_white);
+      chronometer.stop();
+      chronometer.setBase(SystemClock.elapsedRealtime());
+      timeAtPause = 0;
+      tvRecordingStatus.setText("Tap the button to start recording");
+
+
+      getActivity().stopService(intent);
+    }
+
   }
 
   @Override
