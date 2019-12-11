@@ -2,12 +2,15 @@ package com.example.finalproject_draft1.Database;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
 import com.example.finalproject_draft1.RecordingItem;
+
+import java.util.ArrayList;
 
 public class DBHelper extends SQLiteOpenHelper {
 
@@ -79,5 +82,33 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
   }
+
+
+  public ArrayList<RecordingItem> getAllRecordings(){
+
+    ArrayList<RecordingItem> arrayList = new ArrayList<>();
+
+    SQLiteDatabase db = this.getReadableDatabase();
+
+    Cursor cursor = db.rawQuery("select * from " + TABLE_NAME, null);
+
+    if(cursor != null){
+
+      while(cursor.moveToNext()){
+        String name = cursor.getString(1);
+        String path = cursor.getString(2);
+        int length = (int) cursor.getLong(3);
+        long timeAdded = cursor.getLong(4);
+
+
+        RecordingItem recordingItem = new RecordingItem(name, path, length, timeAdded);
+        arrayList.add(recordingItem);
+      }
+
+    }
+
+    return null;
+  }
+
 
 }
