@@ -72,11 +72,87 @@ public class PlaybackFragment extends DialogFragment {
 
     setSeekbarValues();
 
+    floatingActionButton.setOnClickListener(new View.OnClickListener() {
+      @Override
+      public void onClick(View view) {
+
+        try {
+          onPlay(isPlaying);
+        } catch (IOException e) {
+          e.printStackTrace();
+        }
+        isPlaying = !isPlaying;
+
+
+      }
+    });
+
+
+    tvFileName.setText(recordingItem.getName());
+    tvFileLength.setText(String.format("%02d:%02d", minutes, seconds));
+
 
     builder.setView(view);
 
     dialog.getWindow().requestFeature(Window.FEATURE_NO_TITLE);
     return builder.create();
+
+  }
+
+  private void onPlay(boolean isPlaying) throws IOException{
+
+    if(!isPlaying){
+
+      if(mediaPlayer == null){
+
+
+        startPlaying();
+
+      }
+
+    } else {
+
+      pausePlaying();
+
+    }
+
+  }
+
+  private void pausePlaying() {
+
+    floatingActionButton.setImageResource(R.drawable.ic_media_play);
+    handler.removeCallbacks(runnable);
+    mediaPlayer.pause();
+
+  }
+
+  private void startPlaying() throws IOException{
+
+    floatingActionButton.setImageResource(R.drawable.ic_media_pause);
+    mediaPlayer = new MediaPlayer();
+
+    mediaPlayer.setDataSource(recordingItem.getPath());
+    mediaPlayer.prepare();
+    seekBar.setMax(mediaPlayer.getDuration());
+
+    mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+      @Override
+      public void onPrepared(MediaPlayer mediaPlayer) {
+        mediaPlayer.start();
+      }
+    });
+
+
+    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+      @Override
+      public void onCompletion(MediaPlayer mediaPlayer) {
+        stopPlaying();
+      }
+    });
+
+    updateSeekbar();
+
+    getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
   }
 
@@ -202,7 +278,6 @@ public class PlaybackFragment extends DialogFragment {
   };
 
   private void updateSeekbar() {
-
 
     handler.postDelayed(runnable, 1000);
 
