@@ -11,22 +11,26 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.finalproject_draft1.Database.DBHelper;
+import com.example.finalproject_draft1.Adapters.FileViewerAdapter;
 import com.example.finalproject_draft1.R;
+import com.example.finalproject_draft1.RecordingItem;
+
+import java.util.ArrayList;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * Use the {@link SavedFragment#newInstance} factory method to
+ * Use the {@link FileViewerFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SavedFragment extends Fragment {
+public class FileViewerFragment extends Fragment {
 
 
-
-  public SavedFragment() {
+  public FileViewerFragment() {
     // Required empty public constructor
   }
 
@@ -34,11 +38,10 @@ public class SavedFragment extends Fragment {
    * Use this factory method to create a new instance of
    * this fragment using the provided parameters.
    *
-   * @return A new instance of fragment SavedFragment.
+   * @return A new instance of fragment FileViewerFragment.
    */
-  // TODO: Rename and change types and number of parameters
-  public static SavedFragment newInstance() {
-    SavedFragment fragment = new SavedFragment();
+  public static FileViewerFragment newInstance() {
+    FileViewerFragment fragment = new FileViewerFragment();
 
     return fragment;
   }
@@ -52,12 +55,15 @@ public class SavedFragment extends Fragment {
 
   RecyclerView recyclerView;
   DBHelper dbHelper;
+  private FileViewerAdapter fileViewerAdapter;
+
+  ArrayList<RecordingItem> recordingItems;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
                            Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    View savedFragmentView = inflater.inflate(R.layout.fragment_saved, container, false);
+    View savedFragmentView = inflater.inflate(R.layout.fragment_file_viewer, container, false);
 
     recyclerView = savedFragmentView.findViewById(R.id.recyclerView);
 
@@ -76,6 +82,19 @@ public class SavedFragment extends Fragment {
     layoutManager.setReverseLayout(true);
     layoutManager.setStackFromEnd(true);
     recyclerView.setLayoutManager(layoutManager);
+
+    recordingItems = dbHelper.getAllRecordings();
+
+    if (recordingItems == null) {
+
+      Toast.makeText(getContext(), "No audio files exist", Toast.LENGTH_LONG).show();
+    } else {
+
+
+      fileViewerAdapter = new FileViewerAdapter(getActivity(), recordingItems, layoutManager);
+      recyclerView.setAdapter(fileViewerAdapter);
+
+    }
 
   }
 

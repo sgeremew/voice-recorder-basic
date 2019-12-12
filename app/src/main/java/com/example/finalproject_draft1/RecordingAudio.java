@@ -74,6 +74,8 @@ public class RecordingAudio extends Service {
       mediaRecorder.prepare();
       mediaRecorder.start();
 
+      startingTimeMillis = System.currentTimeMillis();
+
     } catch (IOException e){
 
       e.printStackTrace();
