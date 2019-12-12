@@ -39,12 +39,8 @@ public class MainActivity extends AppCompatActivity {
     tabs.setupWithViewPager(viewPager);
 
 
-//
-//    // if these permissions are not enabled this activity is essentially unusable
-//    if (isPermissionsEnabled()) {
-//      setupAudio();
-//    }
-//
+    // if these permissions are not enabled this activity is essentially unusable
+    enablePermissions();
 
 
   }
@@ -56,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
   // Determines if this Activity can record using the hardware audio recorder
   // If not the user is given the opportunity to allow or deny
   // Upon denying the user will not be able to record audio
-  private boolean isPermissionsEnabled() {
+  private void enablePermissions() {
     // "this" is the current Activity
     if ((ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO))
         + (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE))
@@ -81,11 +77,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, "Storage permissions allows you to save your recordings.", Toast.LENGTH_LONG).show();
       }
 
-      return false;
-    }
-    //If permission is granted, then go ahead recording audio
-    else {
-      return true;
     }
   }
 
@@ -103,7 +94,8 @@ public class MainActivity extends AppCompatActivity {
         } else {
           // permission denied
           // Disable the recording functionality that depends on this permission.
-//          startBtn.setEnabled(false);
+
+          // TODO: Either kill the app and send a message or limit functionality and send a message
         }
         return;
       }
