@@ -1,6 +1,7 @@
 package com.example.finalproject_draft1.Adapters;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,10 +10,13 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.finalproject_draft1.Database.DBHelper;
+import com.example.finalproject_draft1.Fragments.PlaybackFragment;
 import com.example.finalproject_draft1.Interfaces.OnDBChangeListener;
 import com.example.finalproject_draft1.R;
 import com.example.finalproject_draft1.RecordingItem;
@@ -102,6 +106,23 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Fi
       tvDateTimeAdded = itemView.findViewById(R.id.file_datetime_recorded);
       cardView = itemView.findViewById(R.id.cardView);
 
+
+      cardView.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+          PlaybackFragment playbackFragment = new PlaybackFragment();
+          Bundle b = new Bundle();
+
+          b.putSerializable("item", recordingItems.get(getAdapterPosition()));
+          playbackFragment.setArguments(b);
+
+          FragmentTransaction fragmentTransaction = ( (FragmentActivity) context ).getSupportFragmentManager().beginTransaction();
+
+          playbackFragment.show(fragmentTransaction, "dialog_playback");
+
+        }
+      });
 
     }
   }
