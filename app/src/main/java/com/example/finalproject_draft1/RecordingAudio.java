@@ -49,12 +49,12 @@ public class RecordingAudio extends Service {
     String action = intent.getAction() != null ? intent.getAction() : "";
 
     try {
-      if (action.equals(RecordingWidget.ACTION_RECORD))
+      if (action.equals(RecordingWidget.ACTION_RECORD) || action.equals(""))
       {
         startRecording();
       }
 
-      else if (action.equals(RecordingWidget.ACTION_STOP)) {
+      else if (action.equals(RecordingWidget.ACTION_STOP) || action.equals("")) {
         stopRecording();
       }
 
@@ -62,6 +62,7 @@ public class RecordingAudio extends Service {
     catch (Exception e)
     {
       e.printStackTrace();
+//      System.out.println(action);
     }
 
     return START_STICKY;
