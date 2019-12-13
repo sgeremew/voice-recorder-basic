@@ -1,0 +1,46 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="@dimen/widget_margin">
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:text="Record a memo"
+        android:textSize="20dp"
+
+        />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_below="@id/textView2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:src="@drawable/ic_mic_white"
+        android:tint="@color/colorPrimary"
+        android:visibility="visible"
+        tools:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_below="@id/textView2"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:adjustViewBounds="false"
+        android:src="@drawable/ic_media_stop"
+        android:tint="@color/colorPrimary"
+        android:layout_toRightOf="@id/imageButton"/>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageButton"
+        android:text="TextView"
+        android:textSize="40dp"
+        android:visibility="invisible" />
+
+</RelativeLayout>

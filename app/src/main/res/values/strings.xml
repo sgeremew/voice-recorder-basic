@@ -1,8 +1,10 @@
 <resources>
-  <string name="app_name">FinalProject-draft1</string>
-  <string name="recording_tab">Record</string>
-  <string name="saved_tab">Saved Recordings</string>
+    <string name="app_name">FinalProject-draft1</string>
+    <string name="recording_tab">Record</string>
+    <string name="saved_tab">Saved Recordings</string>
 
-  <!-- TODO: Remove or change this placeholder text -->
-  <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="appwidget_text">EXAMPLE</string>
+    <string name="add_widget">Add widget</string>
 </resources>

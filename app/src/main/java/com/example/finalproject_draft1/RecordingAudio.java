@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.os.IBinder;
+import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.finalproject_draft1.Database.DBHelper;
@@ -19,6 +21,8 @@ public class RecordingAudio extends Service {
   private long startingTimeMillis = 0;
   private long elapsedMillis = 0;
 
+  TextView textView;
+
   private File file;
 
   private String fileName;
@@ -28,6 +32,7 @@ public class RecordingAudio extends Service {
   @Override
   public void onCreate() {
     super.onCreate();
+
 
     dbHelper = new DBHelper(getApplicationContext());
 
@@ -46,7 +51,24 @@ public class RecordingAudio extends Service {
 
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
-    startRecording();
+    String action = intent.getAction() != null ? intent.getAction() : "";
+
+    try {
+      if (action.equals(RecordingWidget.ACTION_RECORD) || action.equals(""))
+      {
+        startRecording();
+      }
+
+      else if (action.equals(RecordingWidget.ACTION_STOP) || action.equals("")) {
+        stopRecording();
+      }
+
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+
     return START_STICKY;
   }
 
@@ -87,6 +109,7 @@ public class RecordingAudio extends Service {
   private void stopRecording(){
 
 
+
     mediaRecorder.stop();
     elapsedMillis = (System.currentTimeMillis() - startingTimeMillis);
     mediaRecorder.release();
@@ -101,6 +124,7 @@ public class RecordingAudio extends Service {
 
 
   }
+
 
   @Override
   public void onDestroy() {
