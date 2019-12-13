@@ -23,12 +23,13 @@
         android:tint="@color/colorPrimary"
         android:layout_toRightOf="@id/imageButton"/>
 
-    <Chronometer
-        android:id="@+id/chronometerWidget"
-        android:layout_width="160dp"
-        android:layout_height="80dp"
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_below="@id/imageButton"
-        android:fontFamily="sans-serif-light"
-        android:textSize="50sp" />
+        android:text="TextView"
+        android:textSize="40dp"
+        android:visibility="invisible" />
 
 </RelativeLayout>

@@ -10,6 +10,7 @@ import android.os.SystemClock;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import static android.content.Context.MODE_PRIVATE;
 
@@ -22,11 +23,16 @@ public class RecordingWidget extends AppWidgetProvider {
     public static final String ACTION_STOP = "com.example.finalproject_draft1.stop";
 
     public static RemoteViews getRemoteViews(Context context){
+
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recording_widget);
 
         PendingIntent pendingIntentStart = getPendingIntent(context, RecordingWidget.ACTION_RECORD);
         views.setOnClickPendingIntent(R.id.imageButton, pendingIntentStart);
-//        views.setChronometer(R.id.chronometerWidget, SystemClock.elapsedRealtime(), null, false);
+
+
+//        views.setTextViewText(R.id.textView, "Recording...");
+
+//        views.setChronometer(R.id.chronometerWidget, SystemClock.elapsedRealtime(), null, true);
 
         PendingIntent pendingIntentStop = getPendingIntent(context, RecordingWidget.ACTION_STOP);
         views.setOnClickPendingIntent(R.id.imageButton3,pendingIntentStop);
