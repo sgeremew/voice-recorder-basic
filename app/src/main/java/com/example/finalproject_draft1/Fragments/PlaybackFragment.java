@@ -8,6 +8,7 @@ import android.graphics.LightingColorFilter;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,15 +35,15 @@ public class PlaybackFragment extends DialogFragment {
 
   private boolean isPlaying = false;
 
-  long minutes = 0;
-  long seconds = 0;
+  private long minutes = 0;
+  private long seconds = 0;
 
 
-  TextView tvFileName;
-  TextView tvFileLength;
-  TextView tvFileCurrentProgress;
-  SeekBar seekBar;
-  FloatingActionButton floatingActionButton;
+  private TextView tvFileName;
+  private TextView tvFileLength;
+  private TextView tvFileCurrentProgress;
+  private SeekBar seekBar;
+  private FloatingActionButton floatingActionButton;
 
 
   @Override
@@ -56,6 +57,7 @@ public class PlaybackFragment extends DialogFragment {
 
   }
 
+  // Initialize everything
   @NonNull
   @Override
   public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -99,25 +101,47 @@ public class PlaybackFragment extends DialogFragment {
 
   }
 
-  private void onPlay(boolean isPlaying) throws IOException{
+  // onClick of the floatingActionButton
+  private void onPlay(boolean isPlaying) throws IOException {
 
-    if(!isPlaying){
+    // If mediaPlayer is not playing
+    if (!isPlaying) {
 
-      if(mediaPlayer == null){
-
-
+      // If mediaPlayer does NOT exist
+      if (mediaPlayer == null) {
         startPlaying();
-
+      } else {
+        resumePlaying();  // It was paused, now resume
       }
 
     } else {
-
+      // Pause mediaPlayer
       pausePlaying();
 
     }
 
   }
 
+  // Resume mediaPlayer playback
+  private void resumePlaying() {
+
+    floatingActionButton.setImageResource(R.drawable.ic_media_pause);
+    mediaPlayer.start();
+
+    mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+      @Override
+      public void onCompletion(MediaPlayer mediaPlayer) {
+        stopPlaying();
+      }
+    });
+
+    updateSeekbar();
+
+    getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+  }
+
+  // Pause mediaPlayer playback
   private void pausePlaying() {
 
     floatingActionButton.setImageResource(R.drawable.ic_media_play);
@@ -126,7 +150,8 @@ public class PlaybackFragment extends DialogFragment {
 
   }
 
-  private void startPlaying() throws IOException{
+  // Start mediaPlayer playback
+  private void startPlaying() throws IOException {
 
     floatingActionButton.setImageResource(R.drawable.ic_media_pause);
     mediaPlayer = new MediaPlayer();
@@ -142,7 +167,7 @@ public class PlaybackFragment extends DialogFragment {
       }
     });
 
-
+    // Upon completion stop playback
     mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
       @Override
       public void onCompletion(MediaPlayer mediaPlayer) {
@@ -159,15 +184,12 @@ public class PlaybackFragment extends DialogFragment {
   @TargetApi(16)
   private void setSeekbarValues() {
 
-
     ColorFilter colorFilter = new LightingColorFilter(getResources().getColor(R.color.colorPrimary),
       getResources().getColor(R.color.colorPrimary));
-
 
     seekBar.getProgressDrawable().setColorFilter(colorFilter);
     // TODO this only works in Api >=16
     seekBar.getThumb().setColorFilter(colorFilter);
-
 
     seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
       @Override
@@ -181,7 +203,6 @@ public class PlaybackFragment extends DialogFragment {
           long minutes = TimeUnit.MILLISECONDS.toMinutes(mediaPlayer.getCurrentPosition());
           long seconds = TimeUnit.MILLISECONDS.toSeconds(mediaPlayer.getCurrentPosition()) - TimeUnit.MINUTES.toSeconds(minutes);
 
-
           tvFileCurrentProgress.setText(String.format("%02d:%02d", minutes, seconds));
 
           updateSeekbar();
@@ -190,7 +211,7 @@ public class PlaybackFragment extends DialogFragment {
 
           try {
             prepareMediaPlayerFromPoint(progress);
-          } catch (IOException e){
+          } catch (IOException e) {
             e.printStackTrace();
           }
           updateSeekbar();
@@ -213,8 +234,9 @@ public class PlaybackFragment extends DialogFragment {
 
   }
 
-  private void prepareMediaPlayerFromPoint(int progress) throws IOException {
 
+  // Used when user moves the thumb of the seekbar around (e.g. fast-forward and rewind)
+  private void prepareMediaPlayerFromPoint(int progress) throws IOException {
 
     mediaPlayer = new MediaPlayer();
     mediaPlayer.setDataSource(recordingItem.getPath());
@@ -234,6 +256,7 @@ public class PlaybackFragment extends DialogFragment {
 
   }
 
+  // Ends and kills the mediaPlayer and completes the seekbar
   private void stopPlaying() {
 
     floatingActionButton.setImageResource(R.drawable.ic_media_play);
@@ -245,7 +268,6 @@ public class PlaybackFragment extends DialogFragment {
     mediaPlayer.release();
     mediaPlayer = null;
 
-
     seekBar.setProgress(seekBar.getMax());
     isPlaying = !isPlaying;
 
@@ -255,8 +277,8 @@ public class PlaybackFragment extends DialogFragment {
   }
 
 
+  // Used to simultaneously update the progress of the seekbar
   private Runnable runnable = new Runnable() {
-
 
     @Override
     public void run() {

@@ -62,6 +62,7 @@ public class DBHelper extends SQLiteOpenHelper {
   }
 
 
+  // Adds a recording to the database
   public boolean addRecording(RecordingItem recordingItem) {
 
 
@@ -92,6 +93,15 @@ public class DBHelper extends SQLiteOpenHelper {
   }
 
 
+  // Deletes a recording from the database
+  public int deleteRecording(String fileName){
+    SQLiteDatabase db = this.getWritableDatabase();
+    return db.delete(TABLE_NAME, COLUMN_NAME + "=?",
+      new String[]{fileName});
+  }
+
+
+  // Gets all the recordings from the database
   public ArrayList<RecordingItem> getAllRecordings() {
 
     ArrayList<RecordingItem> arrayList = new ArrayList<>();
@@ -125,10 +135,7 @@ public class DBHelper extends SQLiteOpenHelper {
 
 
   public static void setOnDBChangeListener(OnDBChangeListener listener) {
-
-
     onDBChangeListener = listener;
-
   }
 
 

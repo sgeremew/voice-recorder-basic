@@ -1,14 +1,17 @@
 package com.example.finalproject_draft1.Adapters;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
@@ -33,6 +36,7 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Fi
 
   DBHelper dbHelper;
 
+  private AlertDialog actions;
 
   public FileViewerAdapter(Context context, ArrayList<RecordingItem> recordingItems, LinearLayoutManager layoutManager) {
     this.context = context;
@@ -47,12 +51,8 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Fi
   @NonNull
   @Override
   public FileViewerAdapter.FileViewerHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int viewType) {
-
-
     View itemView = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recording_item_card_view, viewGroup, false);
-
     return new FileViewerHolder(itemView);
-
   }
 
   @Override
@@ -88,6 +88,32 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Fi
 
   }
 
+  /**
+   * Sets up the DialogInterface and AlertDialog for when we delete items
+   */
+  private void deleteRecordingItemDialogInterface(final Context context, final int adapterPosition) {
+
+    String removedName = recordingItems.get(adapterPosition).getName();
+
+    DialogInterface.OnClickListener actionListener = new DialogInterface.OnClickListener() {
+      @Override
+      public void onClick(DialogInterface dialog, int which) {
+        RecordingItem removed = recordingItems.remove(adapterPosition);
+        dbHelper.deleteRecording(removed.getName());
+        notifyDataSetChanged();
+        Toast.makeText(context, "Removing", Toast.LENGTH_SHORT).show();
+      }
+    };
+
+    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+    builder.setTitle("Are you sure you want to delete " + removedName + "?");
+
+    builder.setMessage("Deleting cannot be undone.");
+    builder.setPositiveButton("Delete", actionListener);
+    builder.setNegativeButton("Cancel", null);
+    actions = builder.create();
+  }
+
 
   public class FileViewerHolder extends RecyclerView.ViewHolder {
 
@@ -117,10 +143,21 @@ public class FileViewerAdapter extends RecyclerView.Adapter<FileViewerAdapter.Fi
           b.putSerializable("item", recordingItems.get(getAdapterPosition()));
           playbackFragment.setArguments(b);
 
-          FragmentTransaction fragmentTransaction = ( (FragmentActivity) context ).getSupportFragmentManager().beginTransaction();
+          FragmentTransaction fragmentTransaction = ((FragmentActivity) context).getSupportFragmentManager().beginTransaction();
 
           playbackFragment.show(fragmentTransaction, "dialog_playback");
 
+        }
+      });
+
+      cardView.setOnLongClickListener(new View.OnLongClickListener() {
+        @Override
+        public boolean onLongClick(View view) {
+
+          deleteRecordingItemDialogInterface(view.getContext(), getAdapterPosition());
+          actions.show();
+
+          return false;
         }
       });
 
