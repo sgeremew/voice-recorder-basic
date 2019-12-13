@@ -3,8 +3,10 @@ package com.example.finalproject_draft1;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.RemoteViews;
 
@@ -18,10 +20,7 @@ public class RecordingWidget extends AppWidgetProvider {
     public static final String ACTION_RECORD = "com.example.finalproject_draft1.record";
     public static final String ACTION_STOP = "com.example.finalproject_draft1.stop";
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-
-        // Construct the RemoteViews object
+    public static RemoteViews getRemoteViews(Context context){
         RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recording_widget);
 
         PendingIntent pendingIntentStart = getPendingIntent(context, RecordingWidget.ACTION_RECORD);
@@ -31,9 +30,42 @@ public class RecordingWidget extends AppWidgetProvider {
         views.setOnClickPendingIntent(R.id.imageButton3,pendingIntentStop);
 
 
-        appWidgetManager.updateAppWidget(appWidgetId, views);
+        return views;
+
+    }
 
 
+
+    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                int appWidgetId) {
+
+        // Construct the RemoteViews object
+//        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recording_widget);
+//
+//        PendingIntent pendingIntentStart = getPendingIntent(context, RecordingWidget.ACTION_RECORD);
+//        views.setOnClickPendingIntent(R.id.imageButton, pendingIntentStart);
+//
+//        PendingIntent pendingIntentStop = getPendingIntent(context, RecordingWidget.ACTION_STOP);
+//        views.setOnClickPendingIntent(R.id.imageButton3,pendingIntentStop);
+//
+//
+//        appWidgetManager.updateAppWidget(appWidgetId, views);
+
+
+    }
+
+    private void associateIntents(Context context) {
+
+        try {
+            RemoteViews remoteViews = getRemoteViews(context);
+
+            // Push update for this widget to the home screen
+            ComponentName thisWidget = new ComponentName(context, RecordingWidget.class);
+            AppWidgetManager manager = AppWidgetManager.getInstance(context);
+            manager.updateAppWidget(thisWidget, remoteViews);
+        }
+        catch (Exception e)
+        {}
     }
 
     public static PendingIntent getPendingIntent(Context context, String action) {
@@ -45,10 +77,21 @@ public class RecordingWidget extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         // There may be multiple widgets active, so update all of them
-        for (int appWidgetId : appWidgetIds) {
-            updateAppWidget(context, appWidgetManager, appWidgetId);
+//        for (int appWidgetId : appWidgetIds) {
+//            updateAppWidget(context, appWidgetManager, appWidgetId);
+//
+//        }
+        associateIntents(context);
+        Log.d(TAG, "Widget's onUpdate()");
+    }
 
-        }
+    @Override
+    public void onDeleted(Context context, int[] appWidgetIds)
+    {
+        super.onDeleted(context, appWidgetIds);
+        Intent oService = new Intent(context, RecordingAudio.class);
+        context.stopService(oService);
+        Log.d(TAG, "Deleting widget");
     }
 
     @Override
@@ -59,6 +102,24 @@ public class RecordingWidget extends AppWidgetProvider {
     @Override
     public void onDisabled(Context context) {
         // Enter relevant functionality for when the last widget is disabled
+    }
+
+    public void onReceive(Context context, Intent intent)
+    {
+        final String action = intent.getAction();
+        Log.d(TAG, "Widget received action: " + action);
+
+        if ((action.equals(ACTION_RECORD)
+                || action.equals(ACTION_STOP)))
+        {
+            Intent serviceIntent = new Intent(context, RecordingAudio.class);
+            serviceIntent.setAction(action);
+            context.startService(serviceIntent);
+        }
+        else
+        {
+            super.onReceive(context, intent);
+        }
     }
 }
 
