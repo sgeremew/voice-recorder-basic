@@ -5,8 +5,18 @@
     android:layout_height="match_parent"
     android:padding="@dimen/widget_margin">
 
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="160dp"
+        android:layout_height="40dp"
+        android:text="Record a memo"
+        android:textSize="20dp"
+
+        />
+
     <ImageButton
         android:id="@+id/imageButton"
+        android:layout_below="@id/textView2"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:src="@drawable/ic_mic_white"
@@ -16,6 +26,7 @@
 
     <ImageButton
         android:id="@+id/imageButton3"
+        android:layout_below="@id/textView2"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:adjustViewBounds="false"
