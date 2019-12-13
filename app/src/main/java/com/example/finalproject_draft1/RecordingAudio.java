@@ -46,7 +46,24 @@ public class RecordingAudio extends Service {
 
   @Override
   public int onStartCommand(Intent intent, int flags, int startId) {
-    startRecording();
+    String action = intent.getAction() != null ? intent.getAction() : "";
+
+    try {
+      if (action.equals(RecordingWidget.ACTION_RECORD))
+      {
+        startRecording();
+      }
+
+      else if (action.equals(RecordingWidget.ACTION_STOP)) {
+        stopRecording();
+      }
+
+    }
+    catch (Exception e)
+    {
+      e.printStackTrace();
+    }
+
     return START_STICKY;
   }
 
