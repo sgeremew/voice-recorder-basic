@@ -24,7 +24,7 @@
         android:layout_toRightOf="@id/imageButton"/>
 
     <Chronometer
-        android:id="@+id/chronometer"
+        android:id="@+id/chronometerWidget"
         android:layout_width="160dp"
         android:layout_height="80dp"
         android:layout_below="@id/imageButton"

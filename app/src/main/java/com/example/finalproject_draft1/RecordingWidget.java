@@ -6,6 +6,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.os.SystemClock;
 import android.util.Log;
 import android.widget.ImageButton;
 import android.widget.RemoteViews;
@@ -25,32 +26,13 @@ public class RecordingWidget extends AppWidgetProvider {
 
         PendingIntent pendingIntentStart = getPendingIntent(context, RecordingWidget.ACTION_RECORD);
         views.setOnClickPendingIntent(R.id.imageButton, pendingIntentStart);
+//        views.setChronometer(R.id.chronometerWidget, SystemClock.elapsedRealtime(), null, false);
 
         PendingIntent pendingIntentStop = getPendingIntent(context, RecordingWidget.ACTION_STOP);
         views.setOnClickPendingIntent(R.id.imageButton3,pendingIntentStop);
 
 
         return views;
-
-    }
-
-
-
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
-
-        // Construct the RemoteViews object
-//        RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.recording_widget);
-//
-//        PendingIntent pendingIntentStart = getPendingIntent(context, RecordingWidget.ACTION_RECORD);
-//        views.setOnClickPendingIntent(R.id.imageButton, pendingIntentStart);
-//
-//        PendingIntent pendingIntentStop = getPendingIntent(context, RecordingWidget.ACTION_STOP);
-//        views.setOnClickPendingIntent(R.id.imageButton3,pendingIntentStop);
-//
-//
-//        appWidgetManager.updateAppWidget(appWidgetId, views);
-
 
     }
 
